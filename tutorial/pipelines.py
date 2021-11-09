@@ -16,6 +16,11 @@ class TutorialPipeline:
         # get cursor
         self.cursor = self.connect.cursor()
         print("连接数据库成功")
+        # 清空数据库
+        deletes = """truncate table news"""
+        self.cursor.execute(deletes)
+        self.connect.commit()
+        print("清空原有数据")
 
     def open_spider(self, spider):
         print("爬虫开始...")
@@ -25,12 +30,12 @@ class TutorialPipeline:
 
     def process_item(self, item, spider):
         # sql语句
-        insert_sql = """insert into news(title, imgUrl, newTime) VALUES (%s,%s,%s)"""
+        insert_sql = """insert into news(title, imgUrl, newTime,url) VALUES (%s,%s,%s,%s)"""
         # 执行插入数据到数据库操作
-        self.cursor.execute(insert_sql, (item['title'], item['imgUrl'], item['newTime']))
+        self.cursor.execute(insert_sql, (item['title'], item['imgUrl'], item['newTime'], item['url']))
         # 提交，不进行提交无法保存到数据库
         self.connect.commit()
-        print("mysql数据插入成功", item['title'], item['imgUrl'], item['newTime'])
+        print("mysql数据插入成功", item['title'], item['imgUrl'], item['newTime'], item['newTime'])
 
         # self.cursor = self.conn.cursor()
         # sql = 'insert into news values("%s","%s","%s")' % ("item['title']", "item['imgUrl']"," item['newTime']")

@@ -34,9 +34,10 @@ class QuotesSpider(scrapy.Spider):
         for sel in html_data:
             item = NewsItem()
             item['title'] = Selector(text=sel).xpath('//div[@class="news_title"]/h3/a/text()').get()
+            item['url'] = Selector(text=sel).xpath('//div[@class="news_title"]/h3/a/@href').get()
             item['imgUrl'] = Selector(text=sel).xpath('//a[@class="na_pic"]/img/@src').get()
             item['newTime'] = Selector(text=sel).xpath('//div[@class="news_tag"]/span/text()').get()
-            print(item['title'], item['imgUrl'], item['newTime'])
+            print("新闻标题", item['title'], "新闻地址", item['url'], "新闻图片地址", item['imgUrl'], "新闻发布时间", item['newTime'])
             yield item
 
         # page = response.url.split("/")[-2]
