@@ -11,8 +11,9 @@ import pymysql
 class TutorialPipeline:
     def __init__(self):
         # connection database
-        self.connect = pymysql.connect(host='127.0.0.1', user='3306', passwd='123456',
-                                       db='spider')  # 后面三个依次是数据库连接名、数据库密码、数据库名称
+        # ip 173.199.119.23
+        self.connect = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', port=3306,
+                                       db='spider', ssl={'ssl': {}})  # 后面三个依次是数据库连接名、数据库密码、数据库名称
         # get cursor
         self.cursor = self.connect.cursor()
         print("连接数据库成功")
@@ -35,7 +36,7 @@ class TutorialPipeline:
         self.cursor.execute(insert_sql, (item['title'], item['imgUrl'], item['newTime'], item['url']))
         # 提交，不进行提交无法保存到数据库
         self.connect.commit()
-        print("mysql数据插入成功", item['title'], item['imgUrl'], item['newTime'], item['newTime'])
+        print("mysql数据插入成功", item['title'], item['imgUrl'], item['newTime'], item['url'])
 
         # self.cursor = self.conn.cursor()
         # sql = 'insert into news values("%s","%s","%s")' % ("item['title']", "item['imgUrl']"," item['newTime']")

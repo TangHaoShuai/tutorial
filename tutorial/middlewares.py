@@ -89,8 +89,10 @@ class TutorialDownloaderMiddleware:
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
         # 指定谷歌浏览器路径
+        # self.driver = webdriver.Chrome(chrome_options=chrome_options,
+        #                                executable_path='/usr/bin/chromedriver')
         self.driver = webdriver.Chrome(chrome_options=chrome_options,
-                                       executable_path='C:\Program Files\Google\Chrome\Application\chromedriver.exe')
+                                       executable_path='C:\Program Files\Google\Chrome\Application\chromedriver')
         # if request.url != 'https://www.aqistudy.cn/historydata/':
         self.driver.get(request.url)
         # 滚动到屏幕底部
